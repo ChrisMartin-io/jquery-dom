@@ -10,14 +10,15 @@
 </head>
 
 <body>
-  <form>
+  <form action="#">
     <div class="form-group">
       <label for="exampleInputEmail1">Movie Title</label>
-      <input type="text" class="form-control" id="movie-input" aria-describedby="emailHelp" placeholder="Mad Max">
+      <input type="text" class="form-control" id="movie-input" minlength="2" aria-describedby="emailHelp" value="Mad"
+        placeholder="Mad Max">
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Rating</label>
-      <input type="text" class="form-control" id="rating-input" placeholder="10">
+      <input type="number" class="form-control" id="rating-input" min="0" max="10">
     </div>
     <button id="button" type="submit" class="btn btn-primary">Submit</button>
     <div class="movie-container"></div>
@@ -28,17 +29,29 @@
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script>
     $('button').click(function (e) {
-      e.preventDefault();
+ 
       let movieInput = $('#movie-input').val();
       let ratingInput = $('#rating-input').val();
 
+      console.log(movieInput);
+      if (movieInput.length < 2) {
+        // alert('Movie name higher than 2 characters');
+      }
+      else {
+        if (ratingInput < 0 || ratingInput > 10) {
+          // alert('Must be between between 1 and 10');
+        }
+        else {
+               e.preventDefault();
+          $('.movie-container').append(`<div class="inner-container"><h2>Movie: ${movieInput} , Rating: ${ratingInput}</h2> <button class="remove-button">X</button></div>`)
+          // $('.movie-container').append("<button class=\'remove-movie\'>X</button>")
 
-      $('.movie-container').append(`<div class="inner-container"><h2>Movie: ${movieInput} , Rating: ${ratingInput}</h2> <button class="remove-button">X</button></div>`)
-      // $('.movie-container').append("<button class=\'remove-movie\'>X</button>")
+          $('.remove-button').click(function (f) {
+            $(f.target).parent().remove();
+          });
+        }
+      }
 
-      $('.remove-button').click(function (f) {
-        $(f.target).parent().remove();
-      });
 
     });
 
